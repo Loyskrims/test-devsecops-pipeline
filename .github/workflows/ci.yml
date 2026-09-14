@@ -38,4 +38,4 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Run semgrep
-        run: semgrep ci
+        run: semgrep scan --config=auto --error
