@@ -26,3 +26,16 @@ jobs:
 
       - name: Run test
         run: python -m pytest
+
+  semgrep:
+    runs-on: ubuntu-latest
+
+    container:
+      image: semgrep/semgrep
+
+    steps:
+      - name: Checkout rep
+        uses: actions/checkout@v7
+
+      - name: Run semgrep
+        run: semgrep scan --config=auto
