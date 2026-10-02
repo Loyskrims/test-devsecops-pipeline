@@ -30,5 +30,5 @@ semgrep:
     - gitleaks
 
   script:
-    - pwd
-    - ls -la
+    - cp -a "$CI_PROJECT_DIR"/. /src/
+    - semgrep scan --config=auto --error
