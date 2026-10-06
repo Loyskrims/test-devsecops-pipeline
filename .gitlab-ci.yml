@@ -32,3 +32,15 @@ semgrep:
   script:
     - cp -a "$CI_PROJECT_DIR"/. /src/
     - semgrep scan --config=auto --error
+
+trivy-sca:
+  stage: security
+  image:
+    name: aquasec/trivy@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+    entrypoint: [""]
+
+  needs:
+    - gitleaks
+  
+  script:
+    - trivy fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 .
