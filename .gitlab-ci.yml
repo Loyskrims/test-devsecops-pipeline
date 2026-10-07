@@ -1,12 +1,12 @@
 stages:
-  - unity-tests
+  - unit-tests
   - pre-build-scans
   - build
   - post-build-scans
   - post build-tests
 
 test:
-  stage: unity-tests
+  stage: unit-tests
   image: python:3.14-slim@sha256:cad9a2c871761c413caa6fdd6441c783451e740a48aaeba60ae62a8b53525ef6
 
   script:
@@ -50,7 +50,15 @@ trivy-sca:
 
 docker-build:
   stage: build
-  image: docker:29.8.2-cli@sha256:b0dfb3beea69612ccf1f9cfd8f74179b9c497d6b0c9e1294664dffe9bc1c070a
+  image: 
+    name: moby/buildkit:rootless@sha256:2d564747600af8d6bd4ebe9b1b645acfd11709f16647d3fde3f421f13f339087
+    entrypoint: [""]
+
+  variables:
+    BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
 
   script:
-    - docker build -t lab:$CI_COMMIT_SHORT_SHA .
+    - buildctl-daemonless.sh build
+        --frontend dockerfile.v0
+        --local context=.
+        --local dockerfile=.
