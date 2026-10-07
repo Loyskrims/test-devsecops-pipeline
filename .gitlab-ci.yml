@@ -1,6 +1,7 @@
 stages:
   - test
   - security
+  - build
 
 test:
   stage: test
@@ -44,3 +45,10 @@ trivy-sca:
   
   script:
     - trivy fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 .
+
+docker-build:
+  stage: build
+  image: docker:29.8.2-cli@sha256:b0dfb3beea69612ccf1f9cfd8f74179b9c497d6b0c9e1294664dffe9bc1c070a
+
+  script:
+    - docker build -t lab:$CI_COMMIT_SHORT_SHA
