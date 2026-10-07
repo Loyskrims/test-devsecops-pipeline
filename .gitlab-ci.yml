@@ -1,10 +1,12 @@
 stages:
-  - test
-  - security
+  - unity-tests
+  - pre-build-scans
   - build
+  - post-build-scans
+  - post build-tests
 
 test:
-  stage: test
+  stage: unity-tests
   image: python:3.14-slim@sha256:cad9a2c871761c413caa6fdd6441c783451e740a48aaeba60ae62a8b53525ef6
 
   script:
@@ -13,7 +15,7 @@ test:
     - python -m pytest
 
 gitleaks:
-  stage: security
+  stage: pre-build-scans
   image:
     name: zricethezav/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
     entrypoint: [""]
@@ -22,7 +24,7 @@ gitleaks:
     - gitleaks detect --source . --no-banner
 
 semgrep:
-  stage: security
+  stage: pre-build-scans
   image:
     name: semgrep/semgrep@sha256:34ab619bf1391a24bfda3f05debd0d8a6ce3093c2d5f9d39cfc00f83c1397823
     entrypoint: [""]
@@ -35,7 +37,7 @@ semgrep:
     - semgrep scan --config=auto --error
 
 trivy-sca:
-  stage: security
+  stage: pre-build-scans
   image:
     name: aquasec/trivy@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
     entrypoint: [""]
@@ -51,4 +53,4 @@ docker-build:
   image: docker:29.8.2-cli@sha256:b0dfb3beea69612ccf1f9cfd8f74179b9c497d6b0c9e1294664dffe9bc1c070a
 
   script:
-    - docker build -t lab:$CI_COMMIT_SHORT_SHA
+    - docker build -t lab:$CI_COMMIT_SHORT_SHA .
