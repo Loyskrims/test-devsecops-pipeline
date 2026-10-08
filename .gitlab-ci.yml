@@ -66,7 +66,7 @@ docker-build:
 
   artifacts:
     paths:
-      - lab.tar
+      - lab
     expire_in: 12 hrs
 
 trivy-image-scan:
