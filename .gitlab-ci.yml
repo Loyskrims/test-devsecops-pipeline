@@ -62,3 +62,9 @@ docker-build:
         --frontend dockerfile.v0
         --local context=.
         --local dockerfile=.
+        --output type=oci,dest=lab.tar
+
+  artifacts:
+    paths:
+      - lab.tar
+    expire_in: 12 hrs
