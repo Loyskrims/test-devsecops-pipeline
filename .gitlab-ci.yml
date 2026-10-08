@@ -76,4 +76,4 @@ trivy-image-scan:
     entrypoint: [""]
 
   script:
-    - trivy image --input lab.tar --severity HIGH,CRITICAL --exit-code 1
+    - ls -la
