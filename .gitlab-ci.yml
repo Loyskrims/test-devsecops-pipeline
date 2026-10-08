@@ -62,7 +62,7 @@ docker-build:
         --frontend dockerfile.v0
         --local context=.
         --local dockerfile=.
-        --output type=oci,dest=lab.tar
+        --output type=oci,dest=lab
 
   artifacts:
     paths:
@@ -76,4 +76,4 @@ trivy-image-scan:
     entrypoint: [""]
 
   script:
-    - ls -la
+    - trivy image --severity HIGH,CRITICAL --exit-code 1 --input lab
