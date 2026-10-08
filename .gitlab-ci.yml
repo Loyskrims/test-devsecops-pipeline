@@ -3,7 +3,7 @@ stages:
   - pre-build-scans
   - build
   - post-build-scans
-  - post build-tests
+  - post-build-tests
 
 test:
   stage: unit-tests
@@ -68,3 +68,12 @@ docker-build:
     paths:
       - lab.tar
     expire_in: 12 hrs
+
+trivy-image-scan:
+  stage: post-build-scans
+  image:
+    name: aquasec/trivy@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+    entrypoint: [""]
+
+  script:
+    - trivy image --input lab.tar --severity HIGH,CRITICAL --exit-code 1
