@@ -80,6 +80,7 @@ trivy-image-scan:
     - trivy image --severity HIGH,CRITICAL --exit-code 1 --input lab.tar
 
   artifacts:
+    when: always
     paths:
       - trivy-report.json
     expire_in: 12 hrs
