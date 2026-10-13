@@ -76,4 +76,10 @@ trivy-image-scan:
     entrypoint: [""]
 
   script:
+    - trivy image --format json --output trivy-report.json --input lab.tar
     - trivy image --severity HIGH,CRITICAL --exit-code 1 --input lab.tar
+
+  artifacts:
+    paths:
+      - trivy-report.json
+    expire_in: 12 hrs
