@@ -59,6 +59,7 @@ docker-build:
 
   script:
     - buildctl-daemonless.sh build
+        --no-cache
         --frontend dockerfile.v0
         --local context=.
         --local dockerfile=.
