@@ -1,5 +1,5 @@
 vulnerabilities:
   - id: CVE-2026-76642
-  statement: Не применимо
-  purls:
-    - "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7\u0026epoch=1"
+    statement: Не применимо
+    purls:
+      - "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7\u0026epoch=1"
