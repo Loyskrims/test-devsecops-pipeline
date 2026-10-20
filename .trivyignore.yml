@@ -19,3 +19,19 @@ vulnerabilities:
     statement: Неприменима
     purls:
       - "pkg:deb/debian/perl-base@5.40.1-6%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7"
+  - id: GHSA-6v7p-g79w-8964
+    statement: Неприменима
+    purls:
+      - "pkg:pypi/msgpack@1.1.2"
+  - id: CVE-2025-47273
+    statement: Неприменима
+    purls:
+      - "pkg:pypi/setuptools@70.3.0"
+  - id: CVE-2026-97687
+    statement: Неприменима
+    purls:
+      - "pkg:pypi/urllib3@2.7.0"
+  - id: CVE-2026-97689
+    statement: Неприменима
+    purls:
+      - "pkg:pypi/urllib3@2.7.0"
