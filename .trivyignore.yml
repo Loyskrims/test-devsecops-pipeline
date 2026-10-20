@@ -1,17 +1,21 @@
 vulnerabilities:
   - id: CVE-2026-76642
-    statement: Не применимо
-    purls:
-      - "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7\u0026epoch=1"
+    statement: Неприменима
   - id: CVE-2026-78408
-    statement: Не применимо
-    purls:
-      - "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7\u0026epoch=1"
+    statement: Неприменима
   - id: CVE-2026-78409
-    statement: Не применимо
-    purls:
-      - "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7\u0026epoch=1"
+    statement: Неприменима
   - id: CVE-2026-78410
-    statement: Не применимо
+    statement: Неприменима
+  - id: CVE-2025-69720
+    statement: Неприменима
+  - id: CVE-2026-16742
+    statement: Неприменима
+  - id: CVE-2026-54369
+    statement: Неприменима
     purls:
-      - "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7\u0026epoch=1"
+      - "pkg:deb/debian/libacl1@2.3.2-2%2Bb1?arch=amd64\u0026distro=debian-13.7"
+  - id: CVE-2026-9538
+    statement: Неприменима
+    purls:
+      - "pkg:deb/debian/perl-base@5.40.1-6%2Bdeb13u1?arch=amd64\u0026distro=debian-13.7"
