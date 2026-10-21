@@ -85,5 +85,9 @@ podman-check:
     entrypoint: [""]
 
   script:
-    - podman --version
-    - podman info --debug
+    - podman load -i lab.tar
+    - podman run -d --name app-test -p 8000:8000 lab:ci
+    - sleep 20
+
+  after_script:
+    - podman rm -f app-test
