@@ -85,8 +85,8 @@ podman-check:
     entrypoint: [""]
 
   script:
-    - podman load -i lab.tar
-    - podman run -d --name app-test -p 8000:8000 lab:ci
+    - podman load --storage-driver=vfs -i lab.tar
+    - podman run --storage-driver=vfs -d --name app-test -p 8000:8000 lab:ci
     - sleep 20
 
   after_script:
