@@ -39,7 +39,7 @@ semgrep:
 trivy-sca:
   stage: pre-build-scans
   image:
-    name: aquasec/trivy@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+    name: aquasec/trivy@sha256:2416d1f74045b57274df1a340eee6b510cacd73c66a6ccb8da092b117eb7d222
     entrypoint: [""]
 
   needs:
@@ -77,3 +77,13 @@ trivy-image-scan:
 
   script:
     - trivy image --ignorefile ./.trivyignore.yml --severity HIGH,CRITICAL --exit-code 1 --input lab.tar
+
+podman-check:
+  stage: post-build-tests
+  image:
+    name: quay.io/podman/stable
+    entrypoint: [""]
+
+  script:
+    - podman --version
+    - podman info --debug
