@@ -89,4 +89,4 @@ health-check:
   script:
     - docker load -i lab.tar
     - docker run -d --name app-test -p 8000:8000 lab:ci
-    - python -c "import urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8000/health'); assert r.status == 200"
+    - docker exec app-test curl -fs http://127.0.0.1:8000/health
