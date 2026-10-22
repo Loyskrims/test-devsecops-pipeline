@@ -78,7 +78,7 @@ trivy-image-scan:
   script:
     - trivy image --ignorefile ./.trivyignore.yml --severity HIGH,CRITICAL --exit-code 0 --input lab.tar
 
-dind-test:
+health-check:
   stage: post-build-tests
   image: docker:cli
   services:
@@ -87,8 +87,6 @@ dind-test:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   script:
-    - docker info
-    - getent hosts dind || true
     - docker load -i lab.tar
     - docker run -d --name app-test -p 8000:8000 lab:ci
-    - sleep 20
+    - curl -fs http://127.0.0.1:8000/health
