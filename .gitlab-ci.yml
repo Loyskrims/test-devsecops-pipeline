@@ -87,6 +87,8 @@ dind-test:
   variables:
     DOCKER_HOST: tcp://dind:2375
   script:
+    - docker info
+    - getent hosts dind || true
     - docker load -i lab.tar
     - docker run -d --name app-test -p 8000:8000 lab:ci
     - sleep 20
