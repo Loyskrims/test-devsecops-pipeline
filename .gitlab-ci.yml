@@ -89,7 +89,7 @@ health-check:
   script:
     - docker load -i lab.tar
     - docker run -d --name app-test -p 8000:8000 lab:ci
-    - sleep(10)
+    - sleep 10
     - |
       for i in $(seq 1 30); do
         if docker exec app-test python -c \
