@@ -83,9 +83,9 @@ dind-test:
   image: docker:cli
   services:
     - name: docker:dind-rootless
-      alias: dind
   variables:
-    DOCKER_HOST: tcp://dind:2375
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
     - docker info
     - getent hosts dind || true
