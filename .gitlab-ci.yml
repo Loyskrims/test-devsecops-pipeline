@@ -78,16 +78,15 @@ trivy-image-scan:
   script:
     - trivy image --ignorefile ./.trivyignore.yml --severity HIGH,CRITICAL --exit-code 0 --input lab.tar
 
-podman-check:
+dind-test:
   stage: post-build-tests
-  image:
-    name: quay.io/podman/stable
-    entrypoint: [""]
-
+  image: docker:cli
+  services:
+    - name: docker:dind-rootless
+      alias: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2375
   script:
-    - podman load --storage-driver=vfs -i lab.tar
-    - podman run --storage-driver=vfs -d --name app-test -p 8000:8000 lab:ci
+    - docker load -i lab.tar
+    - docker run -d --name app-test -p 8000:8000 lab:ci
     - sleep 20
-
-  after_script:
-    - podman rm -f app-test
