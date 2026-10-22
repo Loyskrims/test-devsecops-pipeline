@@ -89,4 +89,16 @@ health-check:
   script:
     - docker load -i lab.tar
     - docker run -d --name app-test -p 8000:8000 lab:ci
-    - docker exec app-test python -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read().decode())"
+    - sleep(10)
+    - |
+      for i in $(seq 1 30); do
+        if docker exec app-test python -c \
+          "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read().decode())"
+        then
+          echo "Health check passed"
+          exit 0
+        fi
+        sleep 2
+      done
+      docker logs app-test
+      exit 1
