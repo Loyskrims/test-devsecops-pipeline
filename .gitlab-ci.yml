@@ -108,8 +108,8 @@ health-and-zap-test:
         --net zapnet
         -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
         ghcr.io/zaproxy/zaproxy:stable
-        zap-baseline.py -t http://app-test:8000 -r /tmp/report.html -I
-    - docker cp zap:/tmp/report.html ./zap-report.html
+        zap-baseline.py -t http://app-test:8000 -r report.html -I
+    #- docker cp zap:/zap/wrk/report.html ./zap-report.html
     - docker rm zap
 
   artifacts:
