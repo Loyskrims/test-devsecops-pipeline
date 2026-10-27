@@ -29,9 +29,6 @@ semgrep:
     name: semgrep/semgrep@sha256:34ab619bf1391a24bfda3f05debd0d8a6ce3093c2d5f9d39cfc00f83c1397823
     entrypoint: [""]
 
-  needs:
-    - gitleaks
-
   script:
     - cp -a "$CI_PROJECT_DIR"/. /src/
     - semgrep scan --config=auto --error
@@ -41,9 +38,6 @@ trivy-sca:
   image:
     name: aquasec/trivy@sha256:2416d1f74045b57274df1a340eee6b510cacd73c66a6ccb8da092b117eb7d222
     entrypoint: [""]
-
-  needs:
-    - gitleaks
   
   script:
     - trivy fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 .
@@ -78,27 +72,46 @@ trivy-image-scan:
   script:
     - trivy image --ignorefile ./.trivyignore.yml --severity HIGH,CRITICAL --exit-code 0 --input lab.tar
 
-health-check:
-  stage: post-build-tests
+health-and-zap-test:
+  stage: post-build-scans
   image: docker:cli
   services:
     - name: docker:dind-rootless
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
+    
   script:
     - docker load -i lab.tar
-    - docker run -d --name app-test -p 8000:8000 lab:ci
+    - docker network create zapnet
+    - docker run -d --name app-test --net zapnet lab:ci
     - sleep 10
     - |
+      ready = 0
       for i in $(seq 1 30); do
         if docker exec app-test python -c \
           "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read().decode())"
         then
           echo "Health check passed"
-          exit 0
+          ready = 1
+          break
         fi
         sleep 2
       done
-      docker logs app-test
-      exit 1
+      if ["$ready" -ne 1]; then
+        docker logs app-test
+        exit 1
+      fi
+    - docker volume create zap-report
+    - docker run --name zap
+        --net zapnet
+        -v zap-report:/zap/wrk/:rw
+        ghcr.io/zaproxy/zaproxy:stable
+        zap-baseline.py -t http://app-test:8000 -r report.html -I
+    - docker cp zap:/zap/wrk/report.html ./zap-report.html
+    - docker rm zap
+
+  artifacts:
+    paths:
+      - zap-report.html
+    expire_in: 12 hrs
