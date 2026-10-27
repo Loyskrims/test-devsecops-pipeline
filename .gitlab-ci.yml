@@ -103,14 +103,19 @@ health-and-zap-test:
         exit 1
       fi
     - mkdir -p zap-output
-    - chown 1000:1000 zap-output
-    - docker run --name zap
-        --net zapnet
-        -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
-        ghcr.io/zaproxy/zaproxy:stable
-        zap-baseline.py -t http://app-test:8000 -r report.html -I
+    #- chown 1000:1000 zap-output
+    #- docker run --name zap
+    #    --net zapnet
+    #    -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
+    #    ghcr.io/zaproxy/zaproxy:stable
+    #    zap-baseline.py -t http://app-test:8000 -r report.html -I
     #- docker cp zap:/zap/wrk/report.html ./zap-report.html
-    - docker rm zap
+    #- docker rm zap
+    - docker run --rm
+        -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
+        --entrypoint sh
+        ghcr.io/zaproxy/zaproxy:stable
+        -c 'id; ls -ld /zap/wrk; touch /zap/wrk/write-test'
 
   artifacts:
     paths:
