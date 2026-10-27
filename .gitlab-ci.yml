@@ -111,6 +111,7 @@ health-and-zap-test:
     #- docker cp zap:/zap/wrk/report.html ./zap-report.html
     #- docker rm zap
     - docker run --rm
+        --user root
         -v zap-report:/zap/wrk
         --entrypoint sh
         ghcr.io/zaproxy/zaproxy:stable
