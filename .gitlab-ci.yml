@@ -87,18 +87,18 @@ health-and-zap-test:
     - docker run -d --name app-test --net zapnet lab:ci
     - sleep 10
     - |
-      ready = 0
+      ready=0
       for i in $(seq 1 30); do
         if docker exec app-test python -c \
           "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read().decode())"
         then
           echo "Health check passed"
-          ready = 1
+          ready=1
           break
         fi
         sleep 2
       done
-      if ["$ready" -ne 1]; then
+      if [ "$ready" -ne 1 ]; then
         docker logs app-test
         exit 1
       fi
