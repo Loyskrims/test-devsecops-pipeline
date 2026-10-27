@@ -103,21 +103,16 @@ health-and-zap-test:
         exit 1
       fi
     - docker volume create zap-report
-    #- docker run --name zap
-    #    --net zapnet
-    #    -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
-    #    ghcr.io/zaproxy/zaproxy:stable
-    #    zap-baseline.py -t http://app-test:8000 -r report.html -I
-    #- docker cp zap:/zap/wrk/report.html ./zap-report.html
-    #- docker rm zap
-    - docker run --rm
+    - docker run --name zap
         --user root
+        --net zapnet
         -v zap-report:/zap/wrk
-        --entrypoint sh
         ghcr.io/zaproxy/zaproxy:stable
-        -c 'id; ls -ld /zap/wrk; touch /zap/wrk/write-test'
+        zap-baseline.py -t http://app-test:8000 -r report.html -I
+    - docker cp zap:/zap/wrk/report.html ./zap-report.html
+    - docker rm zap
 
   artifacts:
     paths:
-      - zap-output/report.html
+      - report.html
     expire_in: 12 hrs
