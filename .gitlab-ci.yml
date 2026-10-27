@@ -102,8 +102,7 @@ health-and-zap-test:
         docker logs app-test
         exit 1
       fi
-    - mkdir -p "$CI_PROJECT_DIR/zap-output"
-    - chown 1000:1000 "$CI_PROJECT_DIR/zap-output"
+    - docker volume create zap-report
     #- docker run --name zap
     #    --net zapnet
     #    -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
@@ -112,7 +111,7 @@ health-and-zap-test:
     #- docker cp zap:/zap/wrk/report.html ./zap-report.html
     #- docker rm zap
     - docker run --rm
-        -v "$CI_PROJECT_DIR/zap-output:/zap/wrk:rw"
+        -v zap-report:/zap/wrk
         --entrypoint sh
         ghcr.io/zaproxy/zaproxy:stable
         -c 'id; ls -ld /zap/wrk; touch /zap/wrk/write-test'
