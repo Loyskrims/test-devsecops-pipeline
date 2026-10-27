@@ -102,17 +102,16 @@ health-and-zap-test:
         docker logs app-test
         exit 1
       fi
-    - mkdir -p zap-output
-    - chmod 777 zap-output
+    #- mkdir -p zap-output
+    #- chown 1000:1000 zap-output
     - docker run --name zap
         --net zapnet
-        -v "$CI_PROJECT_DIR/zap-output:/zap/wrk/:rw"
         ghcr.io/zaproxy/zaproxy:stable
-        zap-baseline.py -t http://app-test:8000 -r report.html -I
-    #- docker cp zap:/zap/wrk/report.html ./zap-report.html
+        zap-baseline.py -t http://app-test:8000 -r /tmp/report.html -I
+    - docker cp zap:/tmp/report.html ./zap-report.html
     - docker rm zap
 
   artifacts:
     paths:
-      - zap-output/report.html
+      - report.html
     expire_in: 12 hrs
