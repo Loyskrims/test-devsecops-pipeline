@@ -74,9 +74,9 @@ trivy-image-scan:
 
 health-and-zap-test:
   stage: post-build-scans
-  image: docker:cli
+  image: docker:cli@sha256:9e79b879b177fbd72c34376a3dd3d91747da5db49e1f560f76aea59561471977
   services:
-    - name: docker:dind-rootless
+    - name: docker:dind-rootless@sha256:ae083cc7de51e7a8e5a597f8fb774ca7914c408a95fc0f1477826a913479518a
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
@@ -107,12 +107,12 @@ health-and-zap-test:
         --user root
         --net zapnet
         -v zap-report:/zap/wrk
-        ghcr.io/zaproxy/zaproxy:stable
+        ghcr.io/zaproxy/zaproxy:stable@sha256:030d3df57735dacbb83464854758e674dd9ad01d79d12a129a8e58b1fd384238
         zap-baseline.py -t http://app-test:8000 -r report.html -I
     - docker cp zap:/zap/wrk/report.html ./zap-report.html
     - docker rm zap
 
   artifacts:
     paths:
-      - report.html
+      - zap-report.html
     expire_in: 12 hrs
