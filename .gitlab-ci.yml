@@ -74,7 +74,7 @@ trivy-image-scan:
 
 health-and-zap-test:
   stage: post-build-scans
-  image: docker:cli@sha256:9e79b879b177fbd72c34376a3dd3d91747da5db49e1f560f76aea59561471977
+  image: docker:cli@sha256:4d742ab934c2149b628bf26369ac3ec51cb91e2e28fe6722a0e86a6d6efc4bd5
   services:
     - name: docker:dind-rootless@sha256:ae083cc7de51e7a8e5a597f8fb774ca7914c408a95fc0f1477826a913479518a
   variables:
