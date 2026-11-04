@@ -28,7 +28,7 @@ gitleaks:
     entrypoint: [""]
 
   script:
-    - gitleaks detect --source . --no-banner
+    - gitleaks detect --log-opts="-1" --source . --no-banner
 
 semgrep:
   stage: pre-build-scans
