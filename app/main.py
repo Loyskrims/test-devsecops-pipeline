@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+DATABASE_PASSWORD = "123456"
+
 app = FastAPI(
     title="test app",
     description="test app for lab",
