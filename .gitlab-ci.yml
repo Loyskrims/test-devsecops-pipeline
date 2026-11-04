@@ -1,3 +1,10 @@
+workflow:
+  rules:
+    - changes:
+      - "README.md"
+      when: never
+    - when: always
+
 stages:
   - unit-tests
   - pre-build-scans
