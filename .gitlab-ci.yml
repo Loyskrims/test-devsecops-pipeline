@@ -44,8 +44,7 @@ semgrep:
 
   script:
     - cp -a "$CI_PROJECT_DIR"/. /src/
-    - semgrep scan --config=auto --error --sarif --sarif-output=semgrep.sarif
-    - ls -la
+    - semgrep scan --config=auto --error --sarif --sarif-output=/"$CI_PROJECT_DIR"/semgrep.sarif
 
   artifacts:
     paths:

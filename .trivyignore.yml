@@ -35,3 +35,19 @@ vulnerabilities:
     statement: Неприменима
     purls:
       - "pkg:pypi/urllib3@2.7.0"
+  - id: CVE-2026-119373
+    statement: Неприменима
+    purls:
+      - "pkg:deb/debian/libsqlite3-0@3.46.1-7+deb13u2"
+  - id: CVE-2026-119374
+    statement: Неприменима
+    purls:
+      - "pkg:deb/debian/libsqlite3-0@3.46.1-7+deb13u2"
+  - id: CVE-2026-119379
+    statement: Неприменима
+    purls:
+      - "pkg:deb/debian/libsqlite3-0@3.46.1-7+deb13u2"
+  - id: CVE-2026-114613
+    statement: Неприменима
+    purls:
+      - "pkg:pypi/msgpack@1.1.2"
