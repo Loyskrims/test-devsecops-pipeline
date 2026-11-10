@@ -106,7 +106,7 @@ health-and-zap-test:
     DOCKER_TLS_CERTDIR: ""
     
   script:
-    - bash ci-scripts/health-and-zap-test.sh
+    - sh ci-scripts/health-and-zap-test.sh
 
   artifacts:
     paths:
