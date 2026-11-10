@@ -24,11 +24,11 @@ if [ "$ready" -ne 1 ]; then
 fi
 
 docker volume create zap-report
-docker run --name zap
-    --user root
-    --net zapnet
-    -v zap-report:/zap/wrk
-    ghcr.io/zaproxy/zaproxy:stable@sha256:030d3df57735dacbb83464854758e674dd9ad01d79d12a129a8e58b1fd384238
+docker run --name zap \
+    --user root \
+    --net zapnet \
+    -v zap-report:/zap/wrk \
+    ghcr.io/zaproxy/zaproxy:stable@sha256:030d3df57735dacbb83464854758e674dd9ad01d79d12a129a8e58b1fd384238 \
     zap-baseline.py -t http://app-test:8000 -r report.html -J report.json -I
 docker cp zap:/zap/wrk/report.html ./zap.html || true
 docker cp zap:/zap/wrk/report.json ./zap.json || true
