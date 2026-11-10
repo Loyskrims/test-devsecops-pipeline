@@ -22,10 +22,9 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
     
-COPY --chown=10001:10001 app ./app
-
 WORKDIR /app
 
+COPY --chown=10001:10001 app ./app
 COPY --from=builder /venv /venv
 
 ENV PATH="/venv/bin:$PATH" PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
